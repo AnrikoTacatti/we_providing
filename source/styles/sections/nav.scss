@@ -4,6 +4,15 @@
     padding-top: 7px;
     margin-right: 15px;
     
+    @media (max-width: 1030px){
+        margin-left: 0px;
+    }
+    
+    @media (max-width: 1000px){
+        margin-bottom: 25px;
+    }
+    
+    
     &__link{
         display: inline-block;
         vertical-align: top;
@@ -13,7 +22,7 @@
         text-transform: capitalize;
         color:#424242;
         transition: 0.3s;
-        
+      
         &:hover,
         &--active{
             color: #de2b24;
@@ -33,5 +42,16 @@
         &:last-child:after {
             display: none;
         }
+        
+          
+         @media (max-width: 530px){
+            display: block;
+        
+        
+            &:after {
+                display: none;
+            }
+        }
+        
     }
 }
