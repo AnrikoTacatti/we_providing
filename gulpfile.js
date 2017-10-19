@@ -11,7 +11,23 @@ var gulp = require('gulp')
     , autoprefixer = require('gulp-autoprefixer')
     , spritesmith = require('gulp.spritesmith')
     , rimraf = require('rimraf')
-    , pug = require('gulp-pug');
+    , pug = require('gulp-pug')
+    , sourcemaps = require('gulp-sourcemaps');
+/* -------- JS  -------- */
+gulp.task('js',function(){
+    return gulp.src([
+        'source/js/form.js',
+        'source/js/main.js',
+        'source/js/navigation.js'
+    ])
+    .pipe(sourcemaps.init())
+    .pipe(concat('main.min.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('build/js'));
+});
+
+
 /* -------- Server  -------- */
 gulp.task('server', function () {
     browserSync.init({
@@ -57,6 +73,8 @@ gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
 /* ------------ Watchers ------------- */
 gulp.task('watch', function () {
     gulp.watch('source/template/**/*.pug', gulp.series('templates:compile'));
-    gulp.watch('source/styles/**/*.scss', gulp.series('styles:compile'));
+    gulp.watch('source/styles/**/*.scss', gulp.series('styles:compile')),
+    gulp.watch('source/js/**/*.js',
+    gulp.series('js'));
 });
-gulp.task('default', gulp.series('clean', gulp.parallel('templates:compile', 'styles:compile', 'sprite', 'copy'), gulp.parallel('watch', 'server')));
+gulp.task('default', gulp.series('clean', gulp.parallel('templates:compile', 'styles:compile','js', 'sprite', 'copy'), gulp.parallel('watch', 'server')));
