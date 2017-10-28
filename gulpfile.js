@@ -12,19 +12,25 @@ var gulp = require('gulp')
     , spritesmith = require('gulp.spritesmith')
     , rimraf = require('rimraf')
     , pug = require('gulp-pug')
-    , sourcemaps = require('gulp-sourcemaps');
+    , sourcemaps = require('gulp-sourcemaps')
+    , jsvalidate = require('gulp-jsvalidate')
+;
+
 /* -------- JS  -------- */
 gulp.task('js',function(){
     return gulp.src([
+        'source/js/init.js',
         'source/js/form.js',
         'source/js/main.js',
-        'source/js/navigation.js'
+        'source/js/navigation.js',
+        'source/js/validation.js'
     ])
     .pipe(sourcemaps.init())
-    .pipe(concat('main.min.js'))
-    .pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('build/js'));
+        .pipe(jsvalidate())
+        .pipe(concat('main.min.js'))
+        .pipe(sourcemaps.write())
+        .pipe(uglify())
+        .pipe(gulp.dest('build/js'))
 });
 
 
